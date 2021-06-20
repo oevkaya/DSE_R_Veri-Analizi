@@ -1,0 +1,314 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Author>ozan</Author>
+  <LastAuthor>ozan</LastAuthor>
+  <Created>2021-06-16T20:45:52Z</Created>
+  <Version>16.00</Version>
+ </DocumentProperties>
+ <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
+  <AllowPNG/>
+ </OfficeDocumentSettings>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>7050</WindowHeight>
+  <WindowWidth>19200</WindowWidth>
+  <WindowTopX>0</WindowTopX>
+  <WindowTopY>0</WindowTopY>
+  <DoNotCalculateBeforeSave/>
+  <MaxIterations>1000</MaxIterations>
+  <Iteration/>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="survey">
+  <Table ss:ExpandedColumnCount="7" ss:ExpandedRowCount="29" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultRowHeight="14.5">
+   <Row>
+    <Cell><Data ss:Type="String">nationality</Data></Cell>
+    <Cell><Data ss:Type="String">gender</Data></Cell>
+    <Cell><Data ss:Type="String">birthyear</Data></Cell>
+    <Cell><Data ss:Type="String">background</Data></Cell>
+    <Cell><Data ss:Type="String">R_course</Data></Cell>
+    <Cell><Data ss:Type="String">R_skills</Data></Cell>
+    <Cell><Data ss:Type="String">monthly_expenditure</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Belgium</Data></Cell>
+    <Cell><Data ss:Type="String">NA</Data></Cell>
+    <Cell><Data ss:Type="Number">2014</Data></Cell>
+    <Cell><Data ss:Type="String">Psychology</Data></Cell>
+    <Cell><Data ss:Type="String">no</Data></Cell>
+    <Cell><Data ss:Type="String">intermediate</Data></Cell>
+    <Cell><Data ss:Type="Number">772</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Germany</Data></Cell>
+    <Cell><Data ss:Type="String">female</Data></Cell>
+    <Cell><Data ss:Type="Number">1979</Data></Cell>
+    <Cell><Data ss:Type="String">Social Sciences</Data></Cell>
+    <Cell><Data ss:Type="String">yes</Data></Cell>
+    <Cell><Data ss:Type="String">low</Data></Cell>
+    <Cell><Data ss:Type="Number">934</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Belgium</Data></Cell>
+    <Cell><Data ss:Type="String">female</Data></Cell>
+    <Cell><Data ss:Type="Number">2017</Data></Cell>
+    <Cell><Data ss:Type="String">Medicine</Data></Cell>
+    <Cell><Data ss:Type="String">no</Data></Cell>
+    <Cell><Data ss:Type="String">none</Data></Cell>
+    <Cell><Data ss:Type="Number">861</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">China</Data></Cell>
+    <Cell><Data ss:Type="String">male</Data></Cell>
+    <Cell><Data ss:Type="Number">1992</Data></Cell>
+    <Cell><Data ss:Type="String">Linguistics</Data></Cell>
+    <Cell><Data ss:Type="String">no</Data></Cell>
+    <Cell><Data ss:Type="String">low</Data></Cell>
+    <Cell><Data ss:Type="Number">740</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Belgium</Data></Cell>
+    <Cell><Data ss:Type="String">male</Data></Cell>
+    <Cell><Data ss:Type="Number">1986</Data></Cell>
+    <Cell><Data ss:Type="String">Economics</Data></Cell>
+    <Cell><Data ss:Type="String">no</Data></Cell>
+    <Cell><Data ss:Type="String">NA</Data></Cell>
+    <Cell><Data ss:Type="Number">500</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Turkey</Data></Cell>
+    <Cell><Data ss:Type="String">male</Data></Cell>
+    <Cell><Data ss:Type="Number">1994</Data></Cell>
+    <Cell><Data ss:Type="String">Chemistry</Data></Cell>
+    <Cell><Data ss:Type="String">no</Data></Cell>
+    <Cell><Data ss:Type="String">intermediate</Data></Cell>
+    <Cell><Data ss:Type="Number">600</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Turkey</Data></Cell>
+    <Cell><Data ss:Type="String">male</Data></Cell>
+    <Cell><Data ss:Type="Number">1991</Data></Cell>
+    <Cell><Data ss:Type="String">Engineering</Data></Cell>
+    <Cell><Data ss:Type="String">yes</Data></Cell>
+    <Cell><Data ss:Type="String">low</Data></Cell>
+    <Cell><Data ss:Type="Number">650</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Belgium</Data></Cell>
+    <Cell><Data ss:Type="String">female</Data></Cell>
+    <Cell><Data ss:Type="Number">1991</Data></Cell>
+    <Cell><Data ss:Type="String">Engineering</Data></Cell>
+    <Cell><Data ss:Type="String">no</Data></Cell>
+    <Cell><Data ss:Type="String">none</Data></Cell>
+    <Cell><Data ss:Type="Number">537</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">France</Data></Cell>
+    <Cell><Data ss:Type="String">female</Data></Cell>
+    <Cell><Data ss:Type="Number">2017</Data></Cell>
+    <Cell><Data ss:Type="String">Linguistics</Data></Cell>
+    <Cell><Data ss:Type="String">yes</Data></Cell>
+    <Cell><Data ss:Type="String">low</Data></Cell>
+    <Cell><Data ss:Type="Number">896</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Germany</Data></Cell>
+    <Cell><Data ss:Type="String">female</Data></Cell>
+    <Cell><Data ss:Type="Number">1991</Data></Cell>
+    <Cell><Data ss:Type="String">NA</Data></Cell>
+    <Cell><Data ss:Type="String">NA</Data></Cell>
+    <Cell><Data ss:Type="String">none</Data></Cell>
+    <Cell><Data ss:Type="Number">923</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Australia</Data></Cell>
+    <Cell><Data ss:Type="String">male</Data></Cell>
+    <Cell><Data ss:Type="Number">1994</Data></Cell>
+    <Cell><Data ss:Type="String">Chemistry</Data></Cell>
+    <Cell><Data ss:Type="String">no</Data></Cell>
+    <Cell><Data ss:Type="String">low</Data></Cell>
+    <Cell><Data ss:Type="Number">856</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Belgium</Data></Cell>
+    <Cell><Data ss:Type="String">female</Data></Cell>
+    <Cell><Data ss:Type="Number">2025</Data></Cell>
+    <Cell><Data ss:Type="String">Psychology</Data></Cell>
+    <Cell><Data ss:Type="String">no</Data></Cell>
+    <Cell><Data ss:Type="String">intermediate</Data></Cell>
+    <Cell><Data ss:Type="Number">959</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Germany</Data></Cell>
+    <Cell><Data ss:Type="String">male</Data></Cell>
+    <Cell><Data ss:Type="Number">1890</Data></Cell>
+    <Cell><Data ss:Type="String">Design</Data></Cell>
+    <Cell><Data ss:Type="String">yes</Data></Cell>
+    <Cell><Data ss:Type="String">NA</Data></Cell>
+    <Cell><Data ss:Type="Number">709</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">China</Data></Cell>
+    <Cell><Data ss:Type="String">NA</Data></Cell>
+    <Cell><Data ss:Type="Number">1992</Data></Cell>
+    <Cell><Data ss:Type="String">Computer and Information Science</Data></Cell>
+    <Cell><Data ss:Type="String">no</Data></Cell>
+    <Cell><Data ss:Type="String">none</Data></Cell>
+    <Cell><Data ss:Type="Number">654</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Vietnam</Data></Cell>
+    <Cell><Data ss:Type="String">female</Data></Cell>
+    <Cell><Data ss:Type="Number">1983</Data></Cell>
+    <Cell><Data ss:Type="String">Education</Data></Cell>
+    <Cell><Data ss:Type="String">no</Data></Cell>
+    <Cell><Data ss:Type="String">low</Data></Cell>
+    <Cell><Data ss:Type="Number">773</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Belgium</Data></Cell>
+    <Cell><Data ss:Type="String">male</Data></Cell>
+    <Cell><Data ss:Type="Number">1994</Data></Cell>
+    <Cell><Data ss:Type="String">Physics</Data></Cell>
+    <Cell><Data ss:Type="String">yes</Data></Cell>
+    <Cell><Data ss:Type="String">low</Data></Cell>
+    <Cell><Data ss:Type="Number">692</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">France</Data></Cell>
+    <Cell><Data ss:Type="String">male</Data></Cell>
+    <Cell><Data ss:Type="Number">1978</Data></Cell>
+    <Cell><Data ss:Type="String">Medicine</Data></Cell>
+    <Cell><Data ss:Type="String">yes</Data></Cell>
+    <Cell><Data ss:Type="String">NA</Data></Cell>
+    <Cell><Data ss:Type="Number">913</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Belgium</Data></Cell>
+    <Cell><Data ss:Type="String">female</Data></Cell>
+    <Cell><Data ss:Type="Number">1993</Data></Cell>
+    <Cell><Data ss:Type="String">Engineering</Data></Cell>
+    <Cell><Data ss:Type="String">no</Data></Cell>
+    <Cell><Data ss:Type="String">none</Data></Cell>
+    <Cell><Data ss:Type="Number">1200</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Cayman Islands</Data></Cell>
+    <Cell><Data ss:Type="String">male</Data></Cell>
+    <Cell><Data ss:Type="Number">2015</Data></Cell>
+    <Cell><Data ss:Type="String">NA</Data></Cell>
+    <Cell><Data ss:Type="String">no</Data></Cell>
+    <Cell><Data ss:Type="String">low</Data></Cell>
+    <Cell><Data ss:Type="Number">1000</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Belgium</Data></Cell>
+    <Cell><Data ss:Type="String">male</Data></Cell>
+    <Cell><Data ss:Type="Number">1993</Data></Cell>
+    <Cell><Data ss:Type="String">Psychology</Data></Cell>
+    <Cell><Data ss:Type="String">no</Data></Cell>
+    <Cell><Data ss:Type="String">intermediate</Data></Cell>
+    <Cell><Data ss:Type="Number">842</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">China</Data></Cell>
+    <Cell><Data ss:Type="String">female</Data></Cell>
+    <Cell><Data ss:Type="Number">1994</Data></Cell>
+    <Cell><Data ss:Type="String">Psychology</Data></Cell>
+    <Cell><Data ss:Type="String">no</Data></Cell>
+    <Cell><Data ss:Type="String">none</Data></Cell>
+    <Cell><Data ss:Type="Number">905</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Belgium</Data></Cell>
+    <Cell><Data ss:Type="String">male</Data></Cell>
+    <Cell><Data ss:Type="Number">1994</Data></Cell>
+    <Cell><Data ss:Type="String">Physics</Data></Cell>
+    <Cell><Data ss:Type="String">no</Data></Cell>
+    <Cell><Data ss:Type="String">low</Data></Cell>
+    <Cell><Data ss:Type="Number">407</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Belgium</Data></Cell>
+    <Cell><Data ss:Type="String">female</Data></Cell>
+    <Cell><Data ss:Type="Number">1994</Data></Cell>
+    <Cell><Data ss:Type="String">Biological Sciences</Data></Cell>
+    <Cell><Data ss:Type="String">no</Data></Cell>
+    <Cell><Data ss:Type="String">advanced</Data></Cell>
+    <Cell><Data ss:Type="Number">782</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Belgium</Data></Cell>
+    <Cell><Data ss:Type="String">male</Data></Cell>
+    <Cell><Data ss:Type="Number">1994</Data></Cell>
+    <Cell><Data ss:Type="String">Physics</Data></Cell>
+    <Cell><Data ss:Type="String">no</Data></Cell>
+    <Cell><Data ss:Type="String">low</Data></Cell>
+    <Cell><Data ss:Type="Number">1024</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Turkey</Data></Cell>
+    <Cell><Data ss:Type="String">female</Data></Cell>
+    <Cell><Data ss:Type="Number">1994</Data></Cell>
+    <Cell><Data ss:Type="String">Psychology</Data></Cell>
+    <Cell><Data ss:Type="String">no</Data></Cell>
+    <Cell><Data ss:Type="String">none</Data></Cell>
+    <Cell><Data ss:Type="Number">1026</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Belgium</Data></Cell>
+    <Cell><Data ss:Type="String">male</Data></Cell>
+    <Cell><Data ss:Type="Number">2017</Data></Cell>
+    <Cell><Data ss:Type="String">Electrical and Electronic Engineering</Data></Cell>
+    <Cell><Data ss:Type="String">no</Data></Cell>
+    <Cell><Data ss:Type="String">none</Data></Cell>
+    <Cell><Data ss:Type="Number">639</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Greece</Data></Cell>
+    <Cell><Data ss:Type="String">female</Data></Cell>
+    <Cell><Data ss:Type="Number">1990</Data></Cell>
+    <Cell><Data ss:Type="String">Economics</Data></Cell>
+    <Cell><Data ss:Type="String">no</Data></Cell>
+    <Cell><Data ss:Type="String">none</Data></Cell>
+    <Cell><Data ss:Type="Number">1436</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">India</Data></Cell>
+    <Cell><Data ss:Type="String">female</Data></Cell>
+    <Cell><Data ss:Type="Number">1981</Data></Cell>
+    <Cell><Data ss:Type="String">Mathematics</Data></Cell>
+    <Cell><Data ss:Type="String">yes</Data></Cell>
+    <Cell><Data ss:Type="String">low</Data></Cell>
+    <Cell><Data ss:Type="Number">611</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <Header x:Margin="0.3"/>
+    <Footer x:Margin="0.3"/>
+    <PageMargins x:Bottom="0.75" x:Left="0.7" x:Right="0.7" x:Top="0.75"/>
+   </PageSetup>
+   <Selected/>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+</Workbook>

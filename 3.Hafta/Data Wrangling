@@ -1,0 +1,463 @@
+# From base & stats package we have
+
+# Subset Function ---------------------------------------------------------
+data()
+data(starwars)
+
+?subset
+
+colnames(starwars)
+class(starwars)
+
+head(starwars)
+summary(starwars)
+
+length(starwars)
+dim(starwars)
+
+df2 <- subset(starwars, subset = (mass > 100 & homeworld == 'Tatooine') )
+df2
+nrow(starwars)
+nrow(df2)
+
+df3 <- subset(starwars , subset = (mass > 100 & homeworld == 'Tatooine'), 
+              select = c(name , mass, height) ) 
+
+df3
+class(df3)
+nrow(df3)
+
+# Aggregate ---------------------------------------------------------------
+
+#aggregate(x = any_data, by = group_list, FUN = any_function)
+data <- data.frame(x1 = runif(5), # Create example data
+                   x2 = rnorm(5),
+                   x3 = rnorm(5)^2,
+                   group = c("A", "A", "B", "C", "C"))
+
+colnames(data)
+# Sum by group using aggregate over data frame
+aggregate(x = data[ , colnames(data) != "group"],             
+          by = list(data$group), FUN = sum)
+
+# Aggregate function in R with mean summary statistics
+data(iris)
+class(iris)
+agg_mean = aggregate(iris[,1:4], by=list(iris$Species), 
+                     FUN=mean, na.rm=TRUE)
+
+
+# About Data wrangling 
+# Short notes for dpylr grammer from tidyverse bundle-packages 
+
+# Dplyr Functions ---------------------------------------------------------
+# installing
+install.packages('dplyr')
+library(dplyr)
+
+# dplyr provides a set of verbs that help us solve the most common data
+# manipulation challenges while working with tabular data (dataframes, tibbles):
+  
+# dplyr aims to provide a function for each basic verb of data manipulation.
+# These verbs can be organised into three categories based on the component of the dataset that they work with:
+
+# 1. Rows:
+# filter() chooses rows based on column values.
+# slice() chooses rows based on location.
+# arrange() changes the order of the rows.
+
+# 2. Columns:
+# select() changes whether or not a column is included.
+# rename() changes the name of columns.
+# mutate() changes the values of columns and creates new columns.
+
+# relocate() changes the order of the columns.
+# 3. Groups of rows:
+# summarise() collapses a group into a single row.
+
+# Syntax ------------------------------------------------------------------
+
+# the first argument is always a data.frame or tibble
+# the subsequent arguments provide the information required for the verbs to take action
+# the name of columns in the data need not be surrounded by quotes
+
+# dplyr functions work with pipes and expect tidy data.
+
+head(iris)
+head(starwars)
+
+class(chol)
+chol_tibble = as_tibble(chol)
+head(chol_tibble)
+
+# Classical Usage 
+# filter()
+colnames(chol)
+chol$BLOOD
+
+
+filter(chol, BLOOD == "a")
+filter(chol_tibble, BLOOD == "a")
+
+# Shortcut: Ctrl+Shift+M (Windows) and Cmd+Shift+M (Mac)
+# For the Usage of pipe operator
+library("magrittr")
+
+# x %>% f(y): f(x, y)
+
+chol %>% 
+  filter(SMOKE=="sigare")
+
+chol$SMOKE
+
+chol %>%
+  filter(MORT=="dead") 
+
+chol %>%
+  filter(SMOKE=="sigare" & MORT=="dead") # Change by &
+
+# without Pipe operator
+select(filter(chol, SMOKE == "sigare"), AGE)
+
+chol_age <- chol %>%
+  filter(SMOKE=="sigare") %>%
+  select(AGE)
+
+chol_age
+class(chol_age)
+
+colnames(chol)
+
+# More select functions
+# starts_with()
+# ends_with()
+# contains()
+# matches()
+
+chol %>%
+  filter(SMOKE=="pipe") %>%
+  select(BLOOD, starts_with("H")) # "h" also works
+
+chol %>%
+  filter(SMOKE=="pipe") %>%
+  select(BLOOD, contains("H"))
+
+# About arrange function
+
+chol %>%
+  filter(BLOOD=="a") %>%
+  arrange(HEIGHT) #
+
+
+chol %>%
+  filter(BLOOD=="a") %>%
+  arrange(desc(HEIGHT)) # OR desc()
+
+# add_row function
+
+head(cars)
+dim(cars)
+
+cars %>% add_row(speed = 10, dist = 4)
+
+# Mutate function 
+
+head(chol)
+
+BMI_chol <- chol %>%
+  filter(MORT=="alive") %>%
+  arrange(AGE) %>% 
+  mutate(bmi = WEIGHT/(HEIGHT)^2)
+
+class(BMI_chol)
+
+
+BMI_chol %>% 
+  summary()
+
+summary(BMI_chol)
+
+chol %>%
+  filter(MORT == "alive") %>%
+  arrange(AGE) %>% 
+  transmute(bmi = WEIGHT/(HEIGHT)^2) # OR transmute ?
+
+chol %>%
+  filter(MORT=="alive") %>%
+  arrange(AGE) %>% 
+  mutate(bmi = WEIGHT/(HEIGHT)^2) %>% 
+  select(AGE,SMOKE,bmi)
+
+chol %>%
+  filter(MORT=="alive") %>%
+  arrange(AGE) %>% 
+  mutate(bmi = WEIGHT/(HEIGHT)^2) %>% 
+  select(AGE, HEIGHT, bmi) %>% 
+  summarise(mean(bmi), var(bmi)) # You can add median
+
+# rename function 
+chol %>%
+  rename(Status = MORT) %>% # change the order !
+  head()
+
+# Check summarise in help !
+
+chol %>%
+  filter(MORT=="alive") %>%
+  arrange(AGE) %>% 
+  mutate(bmi = WEIGHT/(HEIGHT)^2) %>% 
+  select(AGE, HEIGHT, bmi) %>%
+  summary()
+
+
+# turn back to starwars data 
+head(starwars)
+
+# Eliminate NA example
+starwars %>% 
+  filter(!is.na(hair_color) & !is.na(mass))
+
+
+starwars$height[3] = NA
+starwars$height
+
+summary(starwars$height)
+
+starwars %>%
+  filter(species=="Droid") %>%
+  arrange(desc(mass)) %>%
+  mutate(Veryold = ifelse(birth_year > 100, 1, 0)) %>% 
+  select(name, Veryold)
+
+starwars %>%
+  filter(species=="Droid" & !is.na(birth_year)) %>%
+  arrange(desc(mass)) %>%
+  mutate(Veryold = ifelse(birth_year > 100, 1, 0)) %>% 
+  select(name, Veryold)
+
+# Group by function usage 
+
+starwars %>%
+  group_by(species)
+
+# starwars %>%
+#   group_by(species)
+
+starwars %>%
+  group_by(species) %>%
+  summarise(
+    n = n(),
+    mass = mean(mass, na.rm = TRUE)
+  )
+
+# count() is useful when counting the number of cases (sample size) 
+# for each level of a factor.
+
+# Summarizing Data for groups
+group <- starwars %>% 
+  group_by(skin_color) %>% 
+  summarize(mean(height, na.rm=TRUE), sd(height), min(height), 
+            max(height), n())  %>% 
+  ungroup()
+
+class(group)
+
+# rowwise function 
+# to group data individual rows and compute results for each
+
+starwars %>% 
+  rowwise() %>% 
+  summarise(mean(height)) 
+
+starwars %>% 
+  rowwise() %>% 
+  mutate(mheight = mean(height)) %>% 
+  select(name, mheight)
+
+# Extracting variables 
+# pull function 
+colnames(chol)
+chol %>% pull(AGE) # as a vector !
+
+# manipulate multiple variables once !!!
+
+chol %>% 
+  summarize(across(everything(), mean))
+
+chol %>% 
+  summarize(across(1:4, median))
+
+  
+# glimpse function usage
+# This is like a transposed version of print(): columns run down the page, 
+# and data runs across. This makes it possible to see every column in a data frame.
+help("glimpse")
+chol
+
+Newchol <- glimpse(chol) 
+
+class(chol)
+class(Newchol)
+
+# Tibble ------------------------------------------------------------------
+tibbl
+# Type of joins
+
+starwars$name
+sample(starwars$name, 10)
+df1 <- tibble(name = sample(starwars$name, 10), 
+              grade = sample(c("AA", "BA", "BB", "DC"), 10, replace = T))
+df1
+
+df2 <- tibble(name = sample(starwars$name, 10), class = c(letters[10:1]))
+df2
+
+is.tibble(df2)
+# tribble function
+
+df <- tribble(~name, ~grade,
+        "A", 56, 
+        "B", 87)
+
+is.tibble(df)
+
+# use of merge, not practical for all cases
+merge
+merge(df1,df2)
+
+# use of join functions: 
+df1
+df2
+df1 %>% inner_join(df2)
+df2 %>% inner_join(df1)
+
+df1 %>% left_join(df2)
+
+df1 %>% right_join(df2)
+
+df1 %>% full_join(df2)
+
+# Summary for others: 
+
+# inner_join(x,y): common rows in x and y
+# left_join(x,y): all rows in x
+# right_join(x,y): all rows in y
+# full_join(x,y): all rows in x and y
+# anti_join(x,y): all rows in x, but not in y !
+
+# bind_rows()
+
+bind_rows(df1,df2)
+
+bind_cols(df1,df2)
+
+df3 <- tibble(name = sample(starwars$name, 10), class = c(letters[10:1]))
+
+intersect(df2,df3)
+setdiff(df2,df3)
+
+union(df2,df3)
+
+union_all(df2,df3)
+
+df23 <- full_join(df2,df3)
+df23
+
+# slice() lets you index rows by their (integer) locations. 
+# It allows you to select, remove, and duplicate rows.
+
+slice(df23, 1:5)
+
+slice_sample(df23, n=3, replace = T)
+
+slice_max(df23, class)
+slice_min(df23, name)
+
+# distinct function 
+
+dim(df23)
+dim(unique(df23))
+
+df23[20, ] <- df23[10, ]
+
+df23 %>% 
+  distinct()
+
+# About Missing values
+
+anyNA(starwars)
+
+sapply(starwars, function(x) sum(is.na(x)))
+sapply(starwars, function(x) sum(is.na(x)) / length(x))
+
+starwars %>% 
+  filter(is.na(hair_color) | is.na(birth_year) | is.na(homeworld)) # ...
+
+# dealing with them 
+
+starwars %>% 
+  head() # hair_color
+
+starwars %>% 
+  drop_na(hair_color) # rowwise deletion
+
+starwars %>% 
+  fill(hair_color) # with the recent observation
+
+starwars %>% 
+  select(hair_color) %>% 
+  as.data.frame()
+  # rmarkdown::paged_table()
+
+starwars %>% 
+  replace_na(list(hair_color = "brown"))
+
+mean(starwars$birth_year, na.rm = T)
+
+attach(starwars)
+starwars %>% 
+  replace_na(list(birth_year = mean(birth_year, na.rm = TRUE)))
+detach(starwars)
+
+# about reshaping data 
+
+str(chol)
+head(chol)
+
+dfresh <- data.frame("country" = c("A", "B", "C", "D"), 
+                 "2020" = c(1000, 456, 620, 900), 
+                 "2021" = c(2000, 876, 450, 600)) 
+
+dfresh
+colnames(dfresh) <- c("country", "2020", "2021")
+
+dfresh2 <- pivot_longer(dfresh, cols = c("2020","2021"), 
+             names_to = "year", values_to = "cases")
+
+dfresh3 <- inner_join(dfresh2, tibble(country = dfresh2$country, 
+                                      type = rep(c("o", "x"), 4)) )
+
+dfresh3
+pivot_wider(dfresh3, names_from = type, values_from = cases)  
+
+# Some Further Resources -------------------------------------------------------
+
+# https://mine-cetinkaya-rundel.github.io/tidy-up-ds/2020-05-turkiye/tidy-up.html#54
+
+# About dplyr and tidyr
+# https://jules32.github.io/2016-07-12-Oxford/dplyr_tidyr/
+
+# https://cran.r-project.org/web/packages/dplyr/vignettes/base.html
+
+# https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html
+
+# https://mdogucu.github.io/intro-r-tidy/info.html#slides
+
+# https://bookdown.org/rdpeng/rprogdatascience/
+
+# https://data-flair.training/blogs/learn-r-programming/
+
+
+
+
+

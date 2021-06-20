@@ -1,0 +1,310 @@
+# About Data importing 
+
+# Before importing data, checklist: 
+
+# If you work with spreadsheets, the first row is usually reserved for the header, 
+# while the first column is used to identify the sampling unit
+
+# Avoid names, values or fields with blank spaces, 
+# otherwise each word will be interpreted as a separate variable
+
+# If you want to concatenate words, inserting a . in between to words instead of a space
+
+# Short names are prefered over longer names
+
+# Try to avoid using names that contain symbols such as 
+# ?, $,%, ^, &, *, (, ),-,#, ?,,,<,>, /, |, \, [ ,] ,{, and }
+
+# Delete any comments that you have made in your Excel file 
+# to avoid extra columns or NA's to be added to your file
+
+# Make sure that any missing values in your data set are indicated with NA
+
+
+# Importing data ----------------------------------------------------------
+
+# CSV, TXT, HTML, and Other Common Files ----------------------------------
+
+# Read TXT files with read.table()
+df <- read.table("chol.txt", header = T) # Dizine dikkat !
+df
+
+write.csv(df, "choldata.csv")
+
+# using website
+
+df <- read.table("http://users.metu.edu.tr/oilk/tekrar.txt")
+
+# Turkce Kaynak Onerisi: http://users.metu.edu.tr/oilk/Rgiris3.html
+
+# read.table() function is 
+# the most important and commonly used function to import simple 
+# data files into R. It is easy and flexible
+
+# Read CSV Files into R
+
+# To successfully load this file into R, you can use the read.table() 
+# function in which you specify the separator character, 
+# or you can use the read.csv() or read.csv2()
+
+df <- read.table("choldata.csv", header = T, sep = ",") # Dizine dikkat !
+df
+
+df <- read.csv("choldata.csv", header = T)
+df <- read.csv2("choldata.csv", header = T)
+
+# For further reading: 
+# https://www.datacamp.com/community/tutorials/r-tutorial-read-excel-into-r
+
+# read.delim() for Delimited Files
+
+# In case you have a file with a separator character that is different from a tab, 
+# a comma or a semicolon, you can always 
+# use the read.delim() and read.delim2() functions. 
+# These are variants of the read.table() function, just like the read.csv() function
+
+df <- read.delim("choldel.txt", sep = "$") 
+df
+df <- read.delim2("choldel.txt", sep = "$") 
+df
+
+# XLConnect Package for Reading Excel Files
+# Importing Excel Files With The XLConnect Package
+# install.packages("XLConnect")
+# library("XLConnect")
+
+# Main usage
+# df <- readWorksheetFromFile("<file name and extension>",
+#                            sheet = 1)
+
+# Possible to load the whole workbook with the loadWorkbook() function, 
+# to then read in worksheets that you desire to appear as data frames in R 
+
+# wb <- loadWorkbook("<name and extension of your file>")
+# df <- readWorksheet(wb, sheet=1) 
+
+# Importing Excel Files With The Readxl Package
+
+library(readxl)
+df <- read_excel("survey.xlsx", sheet = 1)
+View(df)
+
+# Read JSON Files
+# To get JSON files into R, you first need to install or load the rjson package
+
+# Activate `rjson`
+library(rjson)
+
+# Import data from json file
+JsonData <- fromJSON(file= "example_1.json" )
+JsonData
+class(JsonData)
+
+# through a URL
+JsonData <- fromJSON(file= "<URL to your JSON file>" )
+
+# Read XML Files
+
+# If you want to get XML data into R, one of the easiest ways 
+# is through the usage of the XML package. 
+# First, you make sure you install and load the XML package in your workspace, 
+# just like demonstrated above. Then, you can use the xmlTreeParse() function
+
+library(XML)
+
+# Parse the XML file
+xmlfile <- xmlTreeParse("survey.xml")
+View(xmlfile)
+class(xmlfile)
+
+# For data frame simply: 
+filename <- "survey.xml"
+data_df <- xmlToDataFrame(filename)
+data_df
+
+# Importing Data From HTML Tables Into R
+
+# Assign your URL to `url`
+url <- "<a URL>"
+
+# Read the HTML table
+data_df <- readHTMLTable(url,
+                         which=3)
+
+# Read SAS, SPSS, and Other Datasets into R:
+# SPSS Files
+
+# Activate the `foreign` library
+library(foreign)
+
+# Read the SPSS data
+mySPSSData <- read.spss("Anxiety 2.sav") # to.data.frame = FALSE
+class(mySPSSData)
+
+as.data.frame(mySPSSData)
+
+# NOT want the variables with value labels to be converted into R factors 
+# with corresponding levels, you should set the use.value.labels argument to FALSE
+
+# Read Stata Files
+# Same package: foreign
+
+mydata <- read.dta("wa-wheat.dta")
+mydata
+
+# For more data: http://www.principlesofeconometrics.com/stata.htm
+
+# Read Systat data
+# mydata <- read.systat("<Path to file>") 
+
+# Read the Minitab data
+# myMTPData <- read.mtp("example2.mtp")
+
+# Read SAS Files
+# Activate the `sas7bdat` library
+library(sas7bdat)
+
+# Read in the SAS data
+mySASData <- read.sas7bdat("<file name>")
+
+# Read RDA or RData Files
+# If your data file is one that you have saved in R as an .rdata file, 
+# you can read it in as follows
+
+load("DataSets.RDA")
+
+# OR use the package haven !
+library(haven)
+
+haven::read_sas("<file name>")
+
+# from system.file
+path <- system.file("examples", "iris.sas7bdat", package = "haven")
+read_sas(path)
+
+# Read Databases and Other Sources Into R: 
+# Read Relational and Non-Relational Databases into R
+
+# From relational one 
+# for MonetDB tutorial 
+
+# https://www.monetdb.org/Documentation/UserGuide/MonetDB-R
+
+# for SQL
+# install.packages("RMySQL")
+# library(RMySQL)
+
+# Other package
+# install.packages("RODBC")
+# library(RODBC)
+
+# Further reading 
+# https://programminghistorian.org/en/lessons/getting-started-with-mysql-using-r#downloading-and-installing-mysql
+
+# https://dept.stat.lsa.umich.edu/~jerrick/courses/stat701/notes/sql.html
+
+# From non-relational
+# for MongoDB
+
+# https://statcompute.wordpress.com/2013/06/08/r-and-mongodb/
+
+
+# Through Webscraping
+
+# The rvest library, maintained by the legendary Hadley Wickham, 
+# is a library that lets users easily scrape (harvest) data from web pages
+# rvest takes inspiration from the web scraping library BeautifulSoup, comes from Python
+
+# Wikipedia: Web scraping focuses on the transformation of unstructured data on the 
+# web, typically in HTML format, into structured data that can be stored 
+# and analyzed in a central local database or spreadsheet.
+
+install.packages("rvest")
+library(rvest)
+
+simple <- read_html("https://dataquestio.github.io/web-scraping-pages/simple.html")
+simple
+
+# to store the text contained in the single <p> tag to a variable
+
+simple %>%
+  html_nodes("p") %>%
+  html_text()
+
+hot100page <- "https://covid19.saglik.gov.tr/"
+hot100 <- read_html(hot100page)
+
+hot100
+str(hot100)
+
+body_nodes <- hot100 %>% 
+  html_node("body") %>% 
+  html_children()
+body_nodes
+
+body_nodes %>%
+  html_node("p")
+
+
+# Other data types Summary ------------------------------------------------
+
+# • haven - SPSS, Stata, and SAS files
+# • readxl - excel files (.xls and .xlsx)
+# • DBI - databases
+# • jsonlite - json
+# • xml2 - XML
+# • httr - Web APIs
+# • rvest - HTML (Web Scraping)
+
+# Resources for further ---------------------------------------------------
+
+# https://www.statmethods.net/input/importingdata.html
+
+# http://tutorials.jenkov.com/r/r-load-data.html
+
+# http://www.r-tutor.com/r-introduction/data-frame/data-import
+
+
+# Exporting data ----------------------------------------------------------
+
+# Using sink function, possible to save all lines in the console as txt file.
+
+sink(file="Summary")
+data(iris)
+cat("\n Temel Istatistikler\n")
+summary(iris)
+sink()
+
+
+# Using write functions
+
+# 1. write in base package
+# 2. write.table, write.csv and write.csv2 in utils package
+# 3. write.matrix in MASS package
+
+write.table(iris, file = "irisdf", sep=", ")
+
+write.table(iris, file="iris.txt", sep="\t")
+
+write.csv(iris, file = "iris.csv", sep = ";")
+
+# save function 
+
+tstat <- summary(iris)
+save(iris, tstat, file="ozet.Rdata")
+
+# About other types of Saving
+pdf("filename.pdf") # PDF file
+png("filename.png") # PBG file
+jpeg("filename.jpg") # JPEG file
+postscript("filename.ps") # PostScript file
+
+# Other functions: 
+
+# write.xlsx : on excel file. write.xlsx(x, "dosya.xlsx")
+
+# write.dta: on stata file write.dta(x, "dosya.dta")
+
+# write.foreign: on spss file. write.foreign(x, "dosya.txt","dosya.sav", package="SPSS")
+# change package ="SAS" for writing as SAS file
+

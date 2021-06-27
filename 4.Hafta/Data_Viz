@@ -1,0 +1,767 @@
+# Plots with base 
+
+# Base package ------------------------------------------------------------
+
+# Consider chol data set simply 
+chol <- choldata
+class(chol)
+
+str(chol)
+
+colnames(chol)
+
+diagnose(chol)
+diagnose_numeric(chol)
+diagnose_category(chol)
+
+attach(chol)
+
+hist(AGE)
+
+# specify the number of cells for the histogram using: breaks = N
+hist(HEIGHT)
+hist(HEIGHT, breaks = 40)
+
+hist(HEIGHT, breaks = c(155,160,165,170,175,180,185,190,195))
+
+# Some labeling
+hist(HEIGHT, xlab = "Height", ylab = "Frequency")
+
+# not frequency
+hist(WEIGHT, freq = T, col = 2, border = 3,
+     main = "Density of Weight")
+
+hist(AGE, col = 3, border = 2,
+     main = "Density of Weight", add = TRUE)
+
+# boxplot
+boxplot(HEIGHT)
+
+# Customization
+boxplot(HEIGHT, col = 4, border = 3, horizontal = T)
+
+# 
+boxplot(HEIGHT, notch = T, col = 4, border = 3, horizontal = T)
+boxplot(chol[2:5], col = 2:5, horizontal = T)
+
+# scatterplot
+
+plot(WEIGHT, CHOL)
+plot(HEIGHT, CHOL)
+plot(AGE, CHOL)
+
+plot(CHOL, type = "l")
+
+# pairs function for general overview
+
+pairs(chol[2:5])
+
+pairs(chol[2:5], col = as.factor(chol$MORT))
+pairs(chol[2:5], col = as.factor(chol$SMOKE))
+
+plot(AGE, CHOL, col = as.factor(chol$SMOKE))
+plot(AGE, CHOL, col = as.factor(chol$SMOKE), pch = 25)
+
+legend(x = 20, y = 80, legend = levels(as.factor(chol$SMOKE)), col = c(1:3), pch = 16)
+
+# barplot usage 
+tabdf <- table(SMOKE)
+
+barplot(tabdf)
+box()
+
+# For further examples:
+# https://www.r-graph-gallery.com/
+
+# https://rpubs.com/SusanEJohnston/7953
+
+# ggplot2 package usage ---------------------------------------------------
+
+# Why ggplot2 
+
+# ggplot2 is an R package for producing statistical, or data, graphics, but it is
+# unlike most other graphics packages because it has a deep underlying grammar.
+# This grammar, based on the Grammar of Graphics (Wilkinson, 2005),
+# is made up of a set of independent components that can be composed in
+# many different ways
+
+library(ggplot2) # within tidyverse package
+library(hrbrthemes) # Additional Themes and Theme Components for 'ggplot2'
+
+# Three important layers are ;
+
+# 1. Data:   The raw data that you want to visualise 
+
+# 2. Aesthetics: Aesthetic mappings of the geometric and statistical objects
+
+# 3. Geometries: The visual elements used for our data.
+
+# Other grammatical elements (we have totally 7)
+
+# 4. Themes: All non-data ink.
+
+# 5. Statistics: Representations of our data to aid understanding.
+
+# 6. Coordinates: The space on which the data will be plotted
+
+# 7. Facets: The arrangement of the data into a grid of plots
+
+
+# Histogram ---------------------------------------------------------------
+
+# basic histogram
+data <- chol
+
+ggplot(data, aes(x=AGE)) +
+  geom_histogram()
+
+# OR 
+ggplot(data) + 
+  aes(x=AGE) +
+  geom_histogram()
+
+# Another usage with pipe
+data %>% 
+  ggplot(aes(x=AGE)) +
+  geom_histogram()
+
+# with the idea of dplyr flow;
+chol %>% 
+  select(AGE) %>% 
+      ggplot(aes(x=AGE)) +
+      geom_histogram()
+
+# Multiple histograms 
+
+ggplot(data, aes(x=AGE)) +
+  geom_histogram(bins=30) + 
+  geom_histogram(aes(x=CHOL))
+
+ggplot(data, aes(x=AGE)) +
+  geom_histogram(binwidth = 5)
+
+
+ggplot(data, aes(x=AGE)) +
+  geom_histogram() + 
+  geom_histogram(aes(x=HEIGHT))
+
+# small multiple facets
+
+ggplot(data, aes(x=AGE, fill = MORT)) +
+  geom_histogram()
+
+ggplot(data, aes(x=AGE, fill = MORT)) +
+  geom_density(alpha=0.5)
+
+# custom with themeipsum()
+ggplot(data, aes(x=AGE, fill = MORT)) +
+  geom_density(alpha=0.5) + 
+  theme_ipsum()
+
+
+# Without transparency
+# Using Small multiple
+ggplot(data, aes(x=HEIGHT, group=SMOKE, fill=SMOKE)) +
+  geom_density(alpha = 0.5) +
+  theme_ipsum() +
+  facet_wrap(~SMOKE) + # Try others !
+
+# stacked density view 
+  
+ggplot(data, aes(x=HEIGHT, group=SMOKE, fill=SMOKE)) +
+  geom_density(position="fill") +
+  theme_ipsum()
+
+data("economics")
+
+ggplot(economics, aes(x= date, y = unemploy)) + 
+  geom_area()
+
+
+# ScatterPlot -------------------------------------------------------------
+
+# basic scatterplot
+ggplot(data, aes(x=HEIGHT, y=CHOL)) + 
+  geom_point()
+
+# Adding Rug plot
+
+ggplot(data, aes(x=HEIGHT, y=CHOL)) + 
+  geom_rug()
+
+ggplot(data, aes(x=HEIGHT, y=CHOL)) + 
+  geom_point() + geom_rug()
+
+ggplot(data, aes(x=HEIGHT, y=CHOL, col = SMOKE, fill = SMOKE)) + 
+  geom_point()
+
+
+ggplot(data, aes(x=HEIGHT, y=CHOL, col = SMOKE, fill = SMOKE)) + 
+  geom_jitter() # jittering for adding some noise to individual data
+
+# smooth
+ggplot(data, aes(x=HEIGHT, y=CHOL)) +
+  geom_point() + geom_smooth()
+
+# OR 
+ggplot(data, aes(x=HEIGHT, y=CHOL)) +
+  geom_point() + stat_smooth(method = "loess")
+
+ggplot(data, aes(x=HEIGHT, y=CHOL)) +
+  geom_point() + geom_smooth(stat = "smooth")
+
+
+
+# with linear trend
+ggplot(data, aes(x=HEIGHT, y=CHOL)) +
+  geom_point() +
+  geom_smooth(method=lm , color="red", se=FALSE) +
+  theme_ipsum()
+
+# linear trend + confidence interval
+
+ggplot(data, aes(x=HEIGHT, y=CHOL)) +
+  geom_point() +
+  geom_smooth(method=lm , color="red", fill = "gray", se=T) +
+  theme_ipsum()
+
+
+# Labeling observations
+ggplot(data, aes(x=HEIGHT, y=CHOL)) +
+  geom_point() + # Show dots
+  geom_text(
+    label=rownames(data)
+    #nudge_x = 0.25, nudge_y = 0.25, check_overlap = T
+  )
+
+ggscat <- ggplot(data, aes(x=HEIGHT, y=CHOL)) +
+  geom_point() + # Show dots
+  geom_label(
+    label="MAX", 
+    x=191,
+    y=235
+   # label.padding = unit(0.55, "lines"), # Rectangle size around label
+   #  label.size = 0.35,
+   #  color = "black",
+   #  fill="#69b3a2"
+  )
+
+# Adding hline and vline
+
+# horizontal
+ggscat + 
+  geom_hline(yintercept=300, color="orange", size=1) + 
+  # vertical
+  geom_vline(xintercept=170, color="orange", size=1)
+
+# Add point and range
+ggscat + 
+  annotate("pointrange", x = 170, y = 300, ymin = 250, ymax = 350, 
+           colour = "orange", size = 1.5, alpha=0.4)
+
+# Adding other features via packages 
+
+# library
+library(ggplot2)
+install.packages("ggExtra")
+library(ggExtra)
+
+
+# classic plot :
+p <- ggplot(data, aes(x=HEIGHT, y = CHOL, color=SMOKE)) +
+  geom_point() +
+  theme(legend.position="none")
+
+# with marginal histogram
+p1 <- ggMarginal(p, type="histogram")
+p1
+
+
+# Boxplot -----------------------------------------------------------------
+
+# boxplot 
+ggplot(data, aes(x=AGE)) +
+  geom_boxplot()
+
+
+ggplot(data, aes(x=AGE)) +
+  geom_boxplot() + 
+  geom_boxplot(aes(x=HEIGHT))
+
+ggplot(data, aes(x=AGE, col = SMOKE)) +
+  geom_boxplot() + 
+  facet_wrap(~SMOKE)
+
+
+ggplot(data, aes(SMOKE, CHOL)) +
+  geom_boxplot() +
+  stat_summary(
+    fun.y = mean,
+    geom = "point"
+    #, col = "red"
+  )
+
+# Violin plot - show the probability density at different values. 
+
+v <- ggplot(data, aes(x=SMOKE, y = CHOL, col = SMOKE)) + geom_violin()
+
+# jitter
+v + geom_jitter(height = 0)
+
+# Barplot -----------------------------------------------------------------
+
+# Create data
+datafr <- data.frame(
+  name=c("A","B","C","D","E") ,  
+  value=c(3,12,5,18,45)
+)
+
+# Barplot
+ggplot(datafr, aes(x=name, y=value)) + 
+  geom_bar(stat = "identity")
+
+ggplot(datafr, aes(x=name, y=value)) + 
+  geom_bar(stat = "identity", width=0.2) 
+
+
+# Barplot
+ggplot(data, aes(x=SMOKE)) + 
+  geom_bar()
+
+ggplot(data, aes(x=BLOOD )) +
+  geom_bar(color="blue") # , fill=rgb(0.1,0.4,0.5,0.7)
+
+ggplot(data, aes(x=BLOOD )) +
+  geom_bar(color="blue", fill=rgb(0.1,0.4,0.5,0.7)) + # , fill=rgb(0.1,0.4,0.5,0.7)
+  coord_flip()
+
+# stackged % grouped 
+
+ggplot(data, aes(fill=SMOKE, y=HEIGHT, x=BLOOD)) + 
+  geom_bar(position="dodge", stat="identity")
+
+ggplot(data, aes(fill=SMOKE, y=AGE, x=BLOOD)) + 
+  geom_bar(position="stack", stat="identity")
+
+ggplot(data, aes(fill=SMOKE, y=AGE, x=SMOKE)) + 
+geom_bar(position="dodge", stat="identity") +
+  facet_wrap(~BLOOD) +
+  theme_ipsum() +
+  xlab("")
+  
+
+# Line chart --------------------------------------------------------------
+
+# create data
+xValue <- AGE[1:10]
+yValue <- CHOL[1:10]
+
+# Plot
+ggplot(data.frame(xValue,yValue), aes(x=xValue, y=yValue)) +
+  geom_line()
+
+# Change line style with arguments like shape, size, color and more.
+
+ggplot(data.frame(xValue,yValue), aes(x=xValue, y=yValue)) +
+  geom_line(color="red", size=2, alpha=0.9, linetype=2) + 
+  ggtitle("Evolution of something")
+
+index = as.ts(c(1:length(CHOL)))
+ggplot(data, aes(x=index, y=CHOL, group=SMOKE, color=SMOKE)) +
+  geom_line()
+
+ggplot(data, aes(CHOL)) +
+  stat_ecdf(geom = "step")
+
+# Some customization
+
+econgg <- ggplot(economics, aes(x= date, y = unemploy)) + 
+  geom_area(col = "blue") + 
+  labs(title = "Unemployment progress", 
+        subtitle = "US economic time series data", 
+       caption= "Source:https://fred.stlouisfed.org/. ")
+
+econgg <- ggplot(economics, aes(x= date, y = unemploy)) + 
+  geom_area(col = "blue") + 
+  xlab("Years") + 
+  ylab("Unemployment") + 
+  ylim(-1000, 20000)
+
+# The theme() function allows to customize all parts of the ggplot2 chart. 
+# The axis.title. controls the axis title appearance. 
+# Since it is text, features are wrapped in a element_text()
+
+# both axis are modified
+econgg + 
+  theme(axis.title = element_text(angle = 90, color="red", size=15, face=3)) # face = title location
+
+# only the x axis is modified
+econgg + 
+  theme(axis.title.x = element_text(angle = 90, color="red", size=10, face=3))
+
+econgg + 
+  theme(axis.text.x = element_text( 
+  angle = 90, 
+  color="blue", 
+  size=15, 
+  face=3)
+)
+
+# Try to look at inside of themes: theme_bw
+theme_bw
+
+# Add-in alternative ? 
+library(esquisse)
+esquisser(iris)
+# try to find what is your need and export the code !
+
+# ggplot2 useful resources: 
+
+# https://ggplot2-book.org/
+
+# https://www.r-graph-gallery.com/ggplot2-package.html
+
+# https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf
+
+# https://www.cedricscherer.com/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/
+
+# https://www.cedricscherer.com/slides/2019-08-28-intro-ggplot-statsizw#50
+
+
+# Beyond ggplot2 ----------------------------------------------------------
+# Extension packages for ggplot2 over the past 10 years
+
+# 1. gganimate: animates ggplot2 visualizations
+install.packages("gganimate")
+library(gganimate)
+
+# theme_set(theme_bw())
+
+# useful data set
+library(gapminder)
+
+str(gapminder)
+
+p <- ggplot(
+  gapminder, 
+  aes(x = gdpPercap, y=lifeExp, size = pop, colour = country)) +
+  geom_point(show.legend = FALSE, alpha = 0.7) +
+  scale_color_viridis_d() +
+  scale_size(range = c(2, 12)) +
+  scale_x_log10() +
+  labs(x = "GDP per capita", y = "Life expectancy")
+p
+
+p + transition_time(year) +
+  labs(title = "Year: {frame_time}")
+
+# By continent
+
+p + facet_wrap(~continent) +
+  transition_time(year) +
+  labs(title = "Year: {frame_time}")
+
+# 2. ggdendro: to control the appearance and display of your cluster analyses
+
+# 3. ggthemes: contains themes and scales that let you replicate the look of 
+# work by data viz giants from Edward Tufte to Fivethirtyeight
+
+library(ggthemes)
+
+ggplot(data, aes(CHOL)) +
+  stat_ecdf(geom = "step") +
+  theme_economist_white()
+
+# 4. ggpubr: to make it easy to produce publication-ready plots using ggplot2
+library("ggpubr")
+
+# Load data
+data("ToothGrowth")
+df <- ToothGrowth
+
+p <- ggboxplot(df, x = "dose", y = "len",
+               color = "dose", palette =c("#00AFBB", "#E7B800", "#FC4E07"),
+               add = "jitter", shape = "dose")
+p
+
+# Specify the comparisons you want
+my_comparisons <- list( c("0.5", "1"), c("1", "2"), c("0.5", "2") )
+# Add p-values comparing groups
+p + stat_compare_means(comparisons = my_comparisons) + # Add pairwise comparisons p-value
+  stat_compare_means(label.y = 50)                     # Add global p-value
+
+# 5. Plotly: makes interactive, publication-quality graphs, especially for 3D plots
+library(plotly)
+
+p <- ggplot(data, aes(x=AGE, fill = MORT)) +
+  geom_density(alpha=0.5) + 
+  theme_ipsum()
+
+p
+
+fig <- ggplotly(p)
+fig
+
+
+# about normality, summary
+x <- y <- rnorm(100, 0, 1)
+z <- x+y
+
+xyz <- data.frame(x,y,z)
+
+plot_normality(as.data.frame(xyz$x))
+plot_normality(as.data.frame(xyz$z))
+
+
+# 3D plots
+
+x <- runif(50, 0, 1)
+y <- runif(50, 0, 1)
+z <- runif(50, 0, 1)
+
+fig <- plot_ly(x = ~x, y = ~y, z = ~z, type = 'mesh3d')
+
+fig
+
+# 3D scatter plot
+fig <- plot_ly(mtcars, x = ~x, y = ~y, z = ~z)
+fig <- fig %>% add_markers()
+fig
+
+# 3D Line plot
+fig <- plot_ly(data, x = ~x, y = ~y, z = ~z, 
+               type = 'scatter3d', mode = 'lines')
+fig
+
+# 3D surface plot 
+str(volcano)
+dim(volcano)
+head(volcano)
+fig <- plot_ly(z = ~volcano)
+fig %>% add_surface()
+
+# 6. patchwork: to deal with several related plots using arithmetic
+
+## Arrange plots
+
+# to group multiple plots into a single figure. 
+# In base R, you could do this using combination of `par(mfrow = c(x,x))`. 
+# For ggplots, you use the `grid.arrange()` function from the gridExtra package.
+library(gridExtra)
+grid.arrange(p1, p2, ncol = 1)
+
+library(patchwork)
+
+p1 <- ggplot(data, aes(x=CHOL)) + geom_boxplot()
+p2 <- ggplot(data, aes(x=SMOKE)) + geom_bar()
+
+p1 + p2
+
+p3 <- ggplot(data, aes(x=AGE, fill = MORT)) +
+  geom_density(alpha=0.5) + 
+  theme_ipsum()
+p4 <- ggplot(data, aes(x=CHOL, fill = MORT)) +
+  geom_density(alpha=0.5) + 
+  theme_ipsum()
+
+(p1 + p2 + p3) / p4
+(p1 | p2 | p3) / p4
+
+grid.arrange(p1, p2, p3, p4, nrow = 2, ncol = 3)
+
+p123 <- grid.arrange(p1, p2, p3, nrow = 1, ncol = 3)
+grid.arrange(p123, p4, nrow = 2, ncol = 1)
+
+# 7. ggridges: useful for visualizing changes in distributions over time, space, or another continuous variable
+
+# 8. ggmap: for visualizing spatial data and models
+
+# 9. ggrepel:  to give ggplot2 users greater control over how text labels appear in their charts
+
+# 10. ggcorrplot: offers an elegant set of options and was inspired by the corrplot package
+install.packages("ggcorrplot")
+library(ggcorrplot)
+
+# Compute a correlation matrix
+corr <- round(cor(chol[2:5]), 2)
+head(corr)
+
+# method = "square" (default)
+ggcorrplot(corr)
+
+# method = "circle"
+ggcorrplot(corr, method = "circle")
+
+# Add correlation coefficients
+ggcorrplot(corr,
+           hc.order = TRUE, # Try to remove
+           type = "lower", # Try to remove
+           lab = TRUE)
+
+# Compute a matrix of correlation p-values
+p.mat <- cor_pmat(chol[2:5])
+head(p.mat)
+
+# Add correlation significance level
+# Barring the no significant coefficient
+ggcorrplot(corr,
+           hc.order = TRUE,
+           type = "lower",
+           p.mat = p.mat)
+
+# 11. ggradar: useful way of visualizing multivariate data, revealing patterns and making it easy to draw comparisons
+
+# 12. GGally: brings together a whole slew of useful additional visualization 
+# functionality, all in one package. You can use GGally to quickly plot the coefficients of a model or to draw networks over maps
+library(GGally)
+
+data(tips, package = "reshape")
+pm <- ggpairs(tips)
+pm
+
+ggplotly(pm)
+
+## reduce the columns being displayed
+## these two lines of code produce the same plot matrix
+pm <- ggpairs(tips, columns = c(1, 6, 2))
+
+# OR use 
+pm <- ggpairs(tips, columns = c("total_bill", "time", "tip"), 
+              columnLabels = c("Total Bill", "Time of Day", "Tip"))
+ggplotly(pm)
+
+# 13. ggiraph: to add advanced interactions or animations to your ggplots
+
+# 14. ggstatsplot: Enhancing ggplot2 plots with statistical analysis
+install.packages("ggstatsplot")
+library(ggstatsplot)
+
+set.seed(123)
+
+# plot
+ggbetweenstats(
+  data = iris,
+  x = Species,
+  y = Sepal.Length,
+  title = "Distribution of sepal length across Iris species"
+)
+
+# Defaults return
+
+# 1. raw data + distributions
+# 2. descriptive statistics
+# 3. inferential statistics
+# 4. effect size + CIs
+# 5. pairwise comparisons
+# 6. Bayesian hypothesis-testing
+# 7. Bayesian estimation
+
+# 15. ggsignif: Visualisation toolbox for beautiful and publication-ready figures
+
+# 16. ggalt: alternative coords, geoms, stats & scales
+
+# 17. ggforce: several interesting add-on features
+
+# 18. ggraph: networks, graphs & trees 
+
+# 19. ggtext: rich-text rendering
+
+# 20. hrbrthemes: typography-centric themes
+
+# 21. ggvis: to build interactive graphics for exploratory data analysis
+# ggvis also incorporates shiny's reactive programming model and 
+# dplyr's grammar of data transformation
+
+install.packages("ggvis")
+library(ggvis)
+
+# points
+mtcars %>% ggvis(~wt, ~mpg) %>% layer_points()
+
+# smooth lines
+mtcars %>% 
+  ggvis(~wt, ~mpg) %>%
+  layer_points() %>%
+  layer_smooths()
+
+# grouping
+mtcars %>% 
+  ggvis(~wt, ~mpg) %>% 
+  layer_points(fill = ~factor(cyl))
+
+
+# Further resources about the above packages:
+
+# https://www.datanovia.com/en/blog/gganimate-how-to-create-plots-with-beautiful-animation-in-r/
+
+# http://www.sthda.com/english/articles/24-ggpubr-publication-ready-plots/
+
+# https://patchwork.data-imaginist.com/
+
+# https://cran.r-project.org/web/packages/ggcorrplot/readme/README.html
+
+# https://ggobi.github.io/ggally/articles/ggpairs.html
+
+# https://indrajeetpatil.github.io/ggstatsplot/
+
+# https://plotly.com/r/
+
+# https://ggvis.rstudio.com/ggvis-basics.html
+
+# https://cran.r-project.org/web/packages/ggraph/vignettes/Edges.html
+
+# https://davidgohel.github.io/ggiraph/
+
+
+
+# BONUS ----------------------------------------------------------
+
+# Lattice package 
+
+# The lattice package, written by Deepayan Sarkar, attempts to improve on 
+# base R graphics by providing better defaults and the ability to easily 
+# display multivariate relationships. In particular, the package supports 
+# the creation of trellis graphs - graphs that display a variable or the 
+# relationship between variables, conditioned on one or more other variables
+
+library(lattice)
+
+# Usage: 
+
+# graph_type(formula, data=)
+
+# kernel density plot
+densityplot(~CHOL,
+            main="Density Plot",
+            xlab="Chol value")
+
+# kernel density plots by factor level
+densityplot(~CHOL|SMOKE,
+            main="Density Plot by Smoke habit",
+            xlab="Chol value")
+
+# Change layout by layout=c(1,3) 
+
+
+# boxplots for each combination of two factors
+bwplot(~CHOL,
+       ylab="CHOL", xlab="Chol values",
+       main="CHOL boxplot")
+
+bwplot(~CHOL|MORT,
+       ylab="CHOL", xlab="Chol values",
+       main="CHOL boxplot", 
+       layout=c(1,2))
+       
+       
+# scatterplot matrix
+splom(data[c(2,3,4,5)], main="MTCARS Data")
+
+
+# Further examples:
+
+# https://www.statmethods.net/advgraphs/trellis.html
+
+# http://www.sthda.com/english/wiki/lattice-graphs
+
+# https://mode.com/blog/r-data-visualization-packages/

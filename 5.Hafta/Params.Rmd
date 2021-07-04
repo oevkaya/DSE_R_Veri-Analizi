@@ -1,0 +1,31 @@
+---
+title: "Parameters for radius `r params$radius` "
+author: oevkaya
+date: " `r format(Sys.Date(), '%d %B, %Y')`"
+output: html_document
+params:
+  radius: 5
+  uni: 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+```
+
+Use of parameters allows us to get results for repeated things !
+
+```{r echo = T}
+x <- params$rad  # radius of a circle
+area <- pi * x^2
+```
+
+For a circle with the radius `r x`, its area is `r area`.
+
+Possible to use more than one parameters: 
+
+For a circle with the radius `r x`, its area is `r area`. 
+Above, the generated uniform values are `r runif(params$uni)`
+
+$x = f(y^2) + g(y)$
+
+$$x = f(y^2) + g(y)$$

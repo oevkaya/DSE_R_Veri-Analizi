@@ -1,0 +1,81 @@
+---
+title: "headers"
+author: oevkaya
+date: "7/4/2021" # OR 4 July 2021
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    fig_caption: true
+---
+
+# Summary
+
+Summary statistics of iris 
+```{r echo = T, highlight=F}
+data(iris)
+summary(iris)
+```
+
+## Summary for only Petal.Length
+
+```{r echo = T}
+data(iris)
+summary(iris$Petal.Length)
+```
+
+
+## Summary for only Sepal.Length
+
+```{r echo = T}
+data(iris)
+summary(iris$Sepal.Length)
+```
+
+
+### Scatter plot of Sepal.Length and Sepal.Width
+
+With customization
+
+```{r, fig.cap= "Scatter plot"}
+plot(iris$Sepal.Length, iris$Sepal.Width)
+```
+
+```{r example, echo =T, fig.align="center", fig.width = 8, fig.heigth = 6}
+plot(iris$Sepal.Length, iris$Sepal.Width)
+```
+
+```{r example1, echo =T, fig.align="center", out.width = "50%", out.heigth = "40%"}
+plot(iris$Sepal.Length, iris$Sepal.Width)
+```
+
+```{r}
+
+meansl <- mean(iris$Sepal.Length)
+meanpl <- mean(iris$Petal.Length)
+meansl
+meanpl 
+```
+
+The mean difference for Sepal Lenght and Petal Length is `r meansl-meanpl`
+
+```{r}
+data(iris)
+head(iris)
+```
+
+```{r}
+data(iris)
+# head(iris)
+
+library(pander)
+pander::pander(head(iris))
+```
+
+
+```{r}
+data(iris)
+library(kableExtra)
+kable(head(iris))
+```
